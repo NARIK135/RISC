@@ -1,0 +1,48 @@
+`timescale 1ns/1ps
+
+module tb_tiny_risc;
+
+    
+    reg clk;
+    reg reset;
+    wire [31:0] result;
+
+    
+    tiny_risc uut (
+        .clk(clk),
+        .reset(reset),
+        .result(result)
+    );
+
+   
+    always begin
+        #5 clk = ~clk;
+    end
+
+   
+    initial begin
+        
+        clk = 0;
+        reset = 0;
+      
+        reset = 1;
+        #10 reset = 0;
+
+        $display("Test case 1: ADD R1, R2");
+        #20;
+        
+        uut.regs.reg_file[1] = 10; // R1 = 10
+        uut.regs.reg_file[2] = 20; // R2 = 20
+
+     
+        #20;
+        $display(" Result = %d", uut.regs.reg_file[1], uut.regs.reg_file[2], result);
+
+
+        // Finish the simulation after some time
+        #30;
+        $finish;
+    end
+
+endmodule
+
