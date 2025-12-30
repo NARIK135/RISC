@@ -3,7 +3,7 @@
 # 🧠 Tiny RISC – 5-Stage Pipelined Processor (Verilog)
 
 This repository contains a **Tiny RISC processor** implemented in **Verilog HDL**, featuring a **classic 5-stage pipeline architecture**.
-The project is designed for **learning, RTL design practice, and frontend VLSI interviews**.
+The project is designed for **learning, RTL design practice.
 
 ---
 
