@@ -1,48 +1,45 @@
 `timescale 1ns/1ps
 
-module tb_tiny_risc;
+module tb_risc;
 
-    
     reg clk;
     reg reset;
-    wire [31:0] result;
 
     
-    tiny_risc uut (
+    risc dut (
         .clk(clk),
-        .reset(reset),
-        .result(result)
+        .reset(reset)
     );
 
-   
-    always begin
-        #5 clk = ~clk;
-    end
+    // Clock generation: 10ns period
+    always #5 clk = ~clk;
 
-   
     initial begin
-        
         clk = 0;
-        reset = 0;
-      
         reset = 1;
-        #10 reset = 0;
 
-        $display("Test case 1: ADD R1, R2");
         #20;
-        
-        uut.regs.reg_file[1] = 10; // R1 = 10
-        uut.regs.reg_file[2] = 20; // R2 = 20
+        reset = 0;
 
-     
-        #20;
-        $display(" Result = %d", uut.regs.reg_file[1], uut.regs.reg_file[2], result);
+       
+        #400;
 
+        $display("----- FINAL REGISTER VALUES -----");
+        $display("R1  = %0d", dut.regfile.reg_file[1]);
+        $display("R2  = %0d", dut.regfile.reg_file[2]);
+        $display("R3  = %0d", dut.regfile.reg_file[3]);
+        $display("R4  = %0d", dut.regfile.reg_file[4]);
+        $display("R5  = %0d", dut.regfile.reg_file[5]);
+        $display("R6  = %0d", dut.regfile.reg_file[6]);
+        $display("R7  = %0d", dut.regfile.reg_file[7]);
+        $display("R8  = %0d", dut.regfile.reg_file[8]);
+        $display("R9  = %0d", dut.regfile.reg_file[9]);
+        $display("R10 = %0d", dut.regfile.reg_file[10]);
+        $display("R11 = %0d", dut.regfile.reg_file[11]);
+        $display("R12 = %0d", dut.regfile.reg_file[12]);
 
-        // Finish the simulation after some time
-        #30;
+        $display("Simulation finished.");
         $finish;
     end
 
 endmodule
-
