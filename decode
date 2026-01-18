@@ -1,0 +1,62 @@
+module decode(
+input [31:0]instruction,
+output [4:0]opcode,
+output imm_f,
+output [3:0]rd,
+output [3:0]r1,
+output [3:0]r2,
+output [13:0]imm
+
+);
+
+assign opcode = instruction[31:27];
+assign imm_f = instruction[26];
+assign rd = instruction[25:22];
+assign r1 = instruction[21:18];
+assign r2 = instruction[17:14];
+assign imm = instruction[13:0];
+
+endmodule
+//////////////////////////////////////////////////////////////////////////////
+module id_ex(
+input clk,
+input reset,
+
+input imm_f,
+input [3:0]rd,
+input [3:0]r1,
+input [3:0]r2,
+input [13:0]imm,
+input [4:0]opcode,
+
+output reg imm_f_out,
+output reg [3:0]rd_out,
+output reg [3:0]r1_out,
+output reg [3:0]r2_out,
+output reg [13:0]imm_out,
+output reg [4:0] opcode_la
+);
+
+always@(posedge clk or posedge reset) begin
+  
+   if(reset) begin
+     rd_out <= 0;
+     r1_out <= 0;
+     r2_out <= 0;
+     imm_f_out <= 0;
+     imm_out <= 0;
+     opcode_la <= 0;
+   end
+   
+   else begin  
+     rd_out <= rd;
+     r1_out <= r1;
+     r2_out <= r2;
+     imm_f_out <= imm_f;
+     imm_out <= imm;
+     opcode_la <= opcode; 
+   end
+
+end
+
+endmodule
