@@ -85,7 +85,8 @@ Immediate and register-based operations are supported using the `imm` flag.
 * Custom **testbench** provided
 * Instruction memory preloaded with test programs
 * Register values verified at end of simulation
-* Designed to work **without NOPs** (basic pipeline)
+<img width="318" height="340" alt="Screenshot 2026-01-18 185253" src="https://github.com/user-attachments/assets/2a1786b9-16c7-4615-a4ac-61c9bca7c86e" />
+
 
 ---
 
