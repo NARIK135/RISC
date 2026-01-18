@@ -130,15 +130,6 @@ Immediate and register-based operations are supported using the `imm` flag.
 
 ---
 
-## 📌 Suitable For
-
-* Frontend VLSI / RTL Design Internships
-* Computer Architecture learning
-* Verilog HDL practice
-* Resume / portfolio project
-
----
-
 ## 🧑‍💻 Author
 
 Designed and implemented by **kiran kumar**
