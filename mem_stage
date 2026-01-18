@@ -1,0 +1,89 @@
+module mem_stage (
+    input  clk,
+    input  reset,
+
+    input  [31:0] alu_result,
+    input  [31:0] r2_value,
+    input  [3:0]  rd,
+
+    input  memwrite,
+    input  memtoreg,
+    input  regwrite,
+
+   
+    output reg [31:0]alu_result_out,
+    output reg [31:0]mem_read_data,
+    output reg [3:0]rd_out,
+
+    output reg  memtoreg_out,
+    output reg regwrite_out
+);
+
+    reg [31:0] data_memory [0:255];
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            mem_read_data <= 32'd0;
+        end
+        else begin       
+            if (memwrite) begin
+                data_memory[alu_result[7:0]] <= r2_value;
+            end
+            if (memtoreg) begin
+                mem_read_data <= data_memory[alu_result[7:0]];
+            end
+        end
+    end
+
+    always @(*) begin
+        alu_result_out = alu_result;
+        rd_out         = rd;
+        memtoreg_out   = memtoreg;
+        regwrite_out   = regwrite;
+    end
+
+endmodule
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+module mem_wb(  
+    
+    input clk,
+    input reset, 
+     
+    input [31:0] alu_result_in ,
+    input [31:0] mem_read_data_in,
+    input [3:0] rd_in,
+    
+    input memtoreg_in,
+    input regwrite_in,
+    
+    output reg [31:0] alu_result_out,
+    output reg [31:0] mem_read_data_out,
+    output reg [3:0] rd_out,
+    
+    output reg memtoreg_out,
+    output reg regwrite_out
+);
+
+
+      always@(posedge clk or posedge reset) begin
+      
+         if(reset) begin
+            alu_result_out <= 0;
+            mem_read_data_out <= 0;
+            rd_out <= 0;
+            
+            memtoreg_out <= 0;
+            regwrite_out <= 0;
+         end
+         
+         else begin
+           alu_result_out <= alu_result_in;
+           mem_read_data_out <= mem_read_data_in;
+           rd_out <= rd_in;
+           memtoreg_out <= memtoreg_in;
+           regwrite_out <= regwrite_in;            
+         end
+     
+      end
+endmodule
