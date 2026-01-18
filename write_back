@@ -1,0 +1,28 @@
+module write_back (
+      
+      input regwrite ,
+      input memtoreg,    
+      input [3:0]rd,
+      input [31:0]mem_read_data,
+      input [31:0]alu_result ,
+      output reg [31:0]wd,
+      output reg [3:0]rd_out    
+ );
+  
+  //reg [31:0] reg_file[15:0];
+
+      always@(*) begin
+           
+           wd = 32'd0;
+       if(regwrite) begin
+         if(memtoreg) begin
+            wd = mem_read_data;
+         end
+         else begin
+            wd = alu_result;
+         end      
+       end 
+        rd_out = rd;
+           
+      end
+endmodule
