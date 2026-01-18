@@ -1,0 +1,31 @@
+module register_file (
+    input  clk,
+    input  reset,
+    input  [3:0] r1,        
+    input  [3:0] r2, 
+    
+    input  [3:0] rd,        
+    input  [31:0] wd,       
+    input regwrite, 
+    output  [31:0] r1_val,   
+    output  [31:0] r2_val    
+);
+
+reg [31:0] reg_file[15:0];
+
+integer i ;
+  always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        for (i = 0; i < 16; i = i + 1)
+            reg_file[i] <= 32'b0;
+    end
+    else if (regwrite) begin
+        reg_file[rd] <= wd;
+    end
+end
+
+assign r1_val = reg_file[r1];
+assign r2_val = reg_file[r2];
+
+
+endmodule
