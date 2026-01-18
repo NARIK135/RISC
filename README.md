@@ -109,18 +109,6 @@ Immediate and register-based operations are supported using the `imm` flag.
 
 ---
 
-## 🚀 Current Limitations
-
-This is an **intentional baseline design**:
-
-* ❌ No data forwarding
-* ❌ No hazard detection
-* ❌ No branch or jump
-* ❌ No pipeline flush
-
-These are planned **future enhancements**.
-
----
 
 ## 🔮 Planned Improvements
 
