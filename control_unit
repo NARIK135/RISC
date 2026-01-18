@@ -1,0 +1,92 @@
+module control_unit (
+    input  [4:0] opcode,
+    input imm_f,
+    output reg regwrite,
+    output reg memwrite,
+    output reg memtoreg,
+    output reg alusrc,
+    output reg [3:0]aluop
+);
+
+  
+    always @(*) begin
+    
+        regwrite = 0;
+        memwrite = 0;
+        memtoreg = 0;
+        alusrc   = 0;
+        aluop    = 4'b0000;
+        
+        case(opcode) 
+        
+          5'd0: begin // add
+           regwrite = 1; 
+           aluop = 4'd0;
+           alusrc = imm_f;           
+          end
+          
+           5'd1: begin // sub
+           regwrite = 1;
+           aluop = 4'd1;   
+           alusrc = imm_f;       
+          end
+          
+           5'd2: begin // and
+           regwrite = 1;
+           aluop = 4'd2; 
+           alusrc = imm_f;         
+          end
+        
+           5'd3: begin // or
+           regwrite = 1;
+           aluop = 4'd3;    
+           alusrc = imm_f;      
+          end
+
+            5'd4: begin // xor
+           regwrite = 1;
+           aluop = 4'd4;  
+           alusrc = imm_f;        
+          end
+          
+           5'd5: begin // mov
+                regwrite = 1;
+                alusrc   = 1;
+                aluop    = 4'd5; 
+            end
+            
+            5'd6: begin  // mul
+              regwrite = 1;
+              aluop = 4'd6;
+              alusrc = imm_f;
+              end
+              
+            5'd7: begin  // div
+               regwrite = 1;
+               aluop = 4'd7;
+               alusrc = imm_f;
+              end    
+           
+           
+            // LOAD
+            5'd8: begin
+                regwrite = 1;
+                memtoreg = 1;
+                alusrc   = 1;
+                aluop    = 4'd0; // address = base + imm
+            end
+
+            // STORE
+            5'd9: begin
+                memwrite = 1;
+                alusrc   = 1;
+                aluop    = 4'd0;
+            end
+
+           
+            
+        endcase
+        
+    end 
+
+endmodule
