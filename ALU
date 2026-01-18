@@ -1,0 +1,94 @@
+
+module op(
+input [31:0]r1_value,
+input [31:0]r2_value,
+input alusrc,
+input [31:0]imm,
+output [31:0]op1,
+output [31:0]op2
+);
+
+assign op1 = r1_value;
+assign op2 = alusrc?imm:r2_value;
+
+endmodule
+
+/////////////////////////////////////////////////////////////////////////
+module alu( 
+input [31:0]op1,
+input [31:0]op2,
+input [3:0]aluop,
+output reg [31:0]alu_result
+
+);
+    
+     always@(*) begin
+          
+       case(aluop)
+       
+           4'd0: alu_result = op1 + op2;
+           4'd1: alu_result = op1 - op2;
+           4'd2: alu_result = op1 & op2;
+           4'd3: alu_result = op1 | op2;
+           4'd4: alu_result = op1 ^ op2;
+           4'd5: alu_result = op2;
+           4'd6: alu_result = op1 * op2;
+           4'd7: alu_result = op1 / op2;
+           default: alu_result = 32'd0;
+     
+        endcase
+    
+      end
+endmodule
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+module ex_mem( 
+ input clk,
+ input reset,
+ 
+ input [31:0] alu_result,
+ input [31:0] r2_value,
+ input [3:0]rd,
+ 
+ input memwrite,
+ input memtoreg,
+ input regwrite, 
+ 
+ output reg [31:0] alu_result_out,
+ output reg [31:0] r2_value_out,
+ output reg [3:0] rd_out,
+ 
+ output reg memwrite_out,
+ output reg memtoreg_out,
+ output reg regwrite_out
+
+);
+
+
+  always@(posedge clk or posedge reset) begin
+  
+    if(reset) begin
+    
+      alu_result_out <= 0;
+      r2_value_out <= 0;
+      rd_out <= 0;
+      
+      memwrite_out <= 0;
+      memtoreg_out <= 0;
+      regwrite_out <= 0;
+      
+    end
+    else begin
+       alu_result_out <= alu_result;
+       r2_value_out <= r2_value;
+      rd_out <= rd;
+      
+      memwrite_out <= memwrite;
+      memtoreg_out <= memtoreg;
+      regwrite_out <= regwrite;
+    end
+  end
+ 
+endmodule
+
